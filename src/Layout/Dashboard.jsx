@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import { FaCartShopping, FaWallet, FaCalendar} from "react-icons/fa6";
 import { FaHome } from "react-icons/fa";
 
@@ -10,23 +10,23 @@ const Dashboard = () => {
             <div className="drawer-content flex flex-col items-center justify-center">
                 {/* Page content here */}
                 <Outlet></Outlet>
-                <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden text-white">Open drawer</label>
+                <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">Open drawer</label>
 
             </div>
-            <div className="drawer-side">
+            <div className="drawer-side bg-[#D1A054]">
                 <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-                <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+                <ul className="menu p-4 w-80 min-h-full text-base-content">
                     {/* Sidebar content here */}
                 
-                    <li><Link><FaHome />User Home</Link></li>
-                    <li><Link><FaCalendar />Reservation</Link></li>
-                    <li><Link><FaCartShopping />My Cart</Link></li>
-                    <li><Link><FaWallet></FaWallet>Payment History</Link></li>
+                    <li><NavLink to='/dashboard/home'><FaHome />User Home</NavLink></li>
+                    <li><NavLink to='/dashboard/reservations'><FaCalendar />Reservation</NavLink></li>
+                    <li><NavLink to='/dashboard/history'><FaWallet></FaWallet>Payment History</NavLink></li>
+                    <li><NavLink to='/dashboard/mycart'><FaCartShopping />My Cart</NavLink></li>
                     <div className='divider'></div>
-                    <li><Link to="/"><FaWallet />Home</Link></li>
-                    <li><Link to="/"><FaWallet />Our Menu</Link></li>
-                    <li><Link to="/"><FaWallet />Order Food</Link></li>
-                    <li><Link to="/"><FaWallet />Home</Link></li>
+                    <li><NavLink to="/"><FaWallet />Home</NavLink></li>
+                    <li><NavLink to="/menu"><FaWallet />Our Menu</NavLink></li>
+                    <li><NavLink to="/order/salad"><FaWallet />Order Food</NavLink></li>
+
                 </ul>
 
             </div>
