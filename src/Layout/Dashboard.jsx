@@ -1,9 +1,14 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { FaCartShopping, FaWallet, FaCalendar} from "react-icons/fa6";
+import { FaCartShopping, FaWallet, FaCalendar } from "react-icons/fa6";
 import { FaHome } from "react-icons/fa";
+import useCart from '../hooks/useCart';
+import { TiThMenuOutline } from "react-icons/ti";
+import { MdFastfood } from "react-icons/md";
 
 const Dashboard = () => {
+    const [cart] = useCart();
+
     return (
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -17,15 +22,17 @@ const Dashboard = () => {
                 <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
                 <ul className="menu p-4 w-80 min-h-full text-base-content">
                     {/* Sidebar content here */}
-                
+
                     <li><NavLink to='/dashboard/home'><FaHome />User Home</NavLink></li>
                     <li><NavLink to='/dashboard/reservations'><FaCalendar />Reservation</NavLink></li>
                     <li><NavLink to='/dashboard/history'><FaWallet></FaWallet>Payment History</NavLink></li>
-                    <li><NavLink to='/dashboard/mycart'><FaCartShopping />My Cart</NavLink></li>
+                    <li><NavLink to='/dashboard/mycart'><FaCartShopping />My Cart
+                        <span className="badge badge-secondary">+{cart?.length || 0}</span>
+                    </NavLink></li>
                     <div className='divider'></div>
                     <li><NavLink to="/"><FaWallet />Home</NavLink></li>
-                    <li><NavLink to="/menu"><FaWallet />Our Menu</NavLink></li>
-                    <li><NavLink to="/order/salad"><FaWallet />Order Food</NavLink></li>
+                    <li><NavLink to="/menu"><TiThMenuOutline />Our Menu</NavLink></li>
+                    <li><NavLink to="/order/salad"><MdFastfood />Order Food</NavLink></li>
 
                 </ul>
 

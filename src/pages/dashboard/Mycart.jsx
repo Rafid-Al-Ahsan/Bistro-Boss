@@ -2,14 +2,44 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { FaTrashAlt } from 'react-icons/fa';
 import useCart from '../../hooks/useCart';
+import Swal from 'sweetalert2'
 
 const Mycart = () => {
 
-    const [cart] = useCart();
+    const [cart, refetch] = useCart();
     const total = cart.reduce((sum, item) => item.price + sum, 0)
 
+    const handleDelete = (item) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`http://localhost:5000/carts/${item._id}`, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.deletedCount>0){
+                        refetch();
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Your file has been deleted.",
+                            icon: "success"
+                        });
+                    }
+                })
+            }
+        });
+    }
+
     return (
-        <div>
+        <div className='w-full'>
             <Helmet>
                 <title>Bistro Boss | My Cart</title>
             </Helmet>
@@ -34,27 +64,27 @@ const Mycart = () => {
                     </thead>
                     <tbody>
                         {
-                            cart.map((item, index) =>     <tr key={item._id}>
+                            cart.map((item, index) => <tr key={item._id}>
                                 <td>
-                                    {index +1}
+                                    {index + 1}
                                 </td>
                                 <td>
-                                        <div className="avatar">
-                                            <div className="mask mask-squircle w-12 h-12">
-                                                <img src={item.image} alt="Avatar Tailwind CSS Component" />
-                                            </div>
+                                    <div className="avatar">
+                                        <div className="mask mask-squircle w-12 h-12">
+                                            <img src={item.image} alt="Avatar Tailwind CSS Component" />
                                         </div>
+                                    </div>
                                 </td>
                                 <td>
-                                   {item.name}
+                                    {item.name}
                                 </td>
                                 <td className='text-end'>${item.price}</td>
                                 <td>
-                                    <button className="btn btn-ghost bg-red-600 btn-lg text-white"><FaTrashAlt/></button>
+                                    <button onClick={() => handleDelete(item)} className="btn btn-ghost bg-red-600 text-white"><FaTrashAlt /></button>
                                 </td>
                             </tr>)
                         }
-                    
+
                     </tbody>
                 </table>
             </div>
