@@ -1,4 +1,7 @@
 import React from 'react';
+import { Link, Outlet } from 'react-router-dom';
+import { FaCartShopping, FaWallet, FaCalendar} from "react-icons/fa6";
+import { FaHome } from "react-icons/fa";
 
 const Dashboard = () => {
     return (
@@ -6,15 +9,24 @@ const Dashboard = () => {
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col items-center justify-center">
                 {/* Page content here */}
-                <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">Open drawer</label>
+                <Outlet></Outlet>
+                <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden text-white">Open drawer</label>
 
             </div>
             <div className="drawer-side">
                 <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
                 <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
                     {/* Sidebar content here */}
-                    <li><a>Sidebar Item 1</a></li>
-                    <li><a>Sidebar Item 2</a></li>
+                
+                    <li><Link><FaHome />User Home</Link></li>
+                    <li><Link><FaCalendar />Reservation</Link></li>
+                    <li><Link><FaCartShopping />My Cart</Link></li>
+                    <li><Link><FaWallet></FaWallet>Payment History</Link></li>
+                    <div className='divider'></div>
+                    <li><Link to="/"><FaWallet />Home</Link></li>
+                    <li><Link to="/"><FaWallet />Our Menu</Link></li>
+                    <li><Link to="/"><FaWallet />Order Food</Link></li>
+                    <li><Link to="/"><FaWallet />Home</Link></li>
                 </ul>
 
             </div>
