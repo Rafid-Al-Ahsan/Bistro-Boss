@@ -2,6 +2,8 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { FaTrashAlt } from 'react-icons/fa';
+import { FaUserShield } from 'react-icons/fa6';
+import Swal from 'sweetalert2';
 
 const Alluser = () => {
     const { data: users = [], refetch } = useQuery({
@@ -12,8 +14,24 @@ const Alluser = () => {
         }
     });
 
-    const handleDelete = user => {
-
+    const handleMakeAdmin = user => {
+        fetch(`http://localhost:5000/users/admin/${user._id}`,{
+            method: 'PATCH'
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if(data.modifiedCount){
+                refetch();
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: `${user.name} is an Admin now!`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        })  
     }
 
 
@@ -36,14 +54,14 @@ const Alluser = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user, index) =>  <tr key={user._id}>
-                            <th>{index+1}</th>
+                        {users.map((user, index) => <tr key={user._id}>
+                            <th>{index + 1}</th>
                             <td>{user.name}</td>
                             <td>{user.email}</td>
-                            <td>Blue</td>
-                            <button onClick={() => handleDelete(user)} className="btn btn-ghost bg-red-600 text-white"><FaTrashAlt /></button>
+                            <td>{user.role === 'admin' ? 'admin' : <button onClick={() => handleMakeAdmin(user)} className="btn btn-ghost bg-orange-600 text-white"><FaUserShield /></button>}</td>
+                            <td><button onClick={() => handleMakeAdmin(user)} className="btn btn-ghost bg-red-600 text-white"><FaTrashAlt /></button></td>
                         </tr>)}
-                       
+
                     </tbody>
                 </table>
             </div>
