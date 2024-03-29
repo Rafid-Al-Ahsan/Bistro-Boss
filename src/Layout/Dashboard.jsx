@@ -5,12 +5,14 @@ import { FaHome } from "react-icons/fa";
 import useCart from '../hooks/useCart';
 import { TiThMenuOutline } from "react-icons/ti";
 import { MdFastfood } from "react-icons/md";
+import useAdmin from '../hooks/useAdmin';
 
 const Dashboard = () => {
     const [cart] = useCart();
 
     // TODO: laod data from the server to have dynamic isAdmin based on data
-    const isAdmin = true;
+    // const isAdmin = true;
+    const [isAdmin] = useAdmin();
 
     return (
         <div className="drawer lg:drawer-open">
